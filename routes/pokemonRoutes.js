@@ -1,5 +1,4 @@
 import express from "express";
-import pokemonModel from "../models/pokemonModel.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -9,6 +8,7 @@ import { getTypePokemons } from "../controllers/getTypePokemons.js";
 import { getRandomPokemon } from "../controllers/getRandomPokemon.js";
 import { addPokemon } from "../controllers/addPokemon.js";
 import { deletePokemon } from "../controllers/deletePokemon.js";
+import { updatePokemonData } from "../controllers/updatePokemonData.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,18 +33,7 @@ router.post('/add',addPokemon);
 
 router.delete('/delete/:id',deletePokemon);
 
-router.patch('/update/:id',async(req,res)=>{
-    const { id } = req.params;
-    if(req.body.name) req.body.name = capitalizeWholeString(req.body.name);
-    if(req.body.type) req.body.type = capitalizeWholeString(req.body.type);
-    try {
-        const updatedPokemon = await pokemonModel.findByIdAndUpdate(id,req.body);
-        if(!updatedPokemon) throw Error('could not update pokemon');
-        res.status(200).json({message: `successfully updated id: ${id}`});
-    } catch (error) {
-        res.status(400).json({message: error});
-    }
-});
+router.patch('/update/:id',updatePokemonData);
 
 
 
