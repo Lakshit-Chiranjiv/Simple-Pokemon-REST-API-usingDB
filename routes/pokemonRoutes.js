@@ -32,7 +32,16 @@ router.get('/getAll',async(req,res)=>{
     }
 });
 
-
+router.get('/getOne/:id',async(req,res)=>{
+    const { id } = req.params;
+    try {
+        const foundPokemon = await pokemonModel.findById(id);
+        if(!foundPokemon) throw Error('could not find pokemon');
+        res.status(200).json(foundPokemon);
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+});
 
 router.post('/add',async(req,res)=>{
     req.body.name = capitalizeWholeString(req.body.name);
