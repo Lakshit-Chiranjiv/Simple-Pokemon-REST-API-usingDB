@@ -12,7 +12,7 @@ mongoose.connect(MONGO_DB_URI)
 const db = mongoose.connection;
 
 app.get('/',(req,res)=>{
-    res.send("hello");
+    res.send("<h1>Hello from Pokemons API</h1><h3><a href='/pokemon'>Head here!!</a></h3>");
 })
 app.use(bodyParser.json());
 app.use('/pokemon',pokemonRouter);
