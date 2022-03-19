@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Lakshit-Chiranjiv/Simple-Pokemon-REST-API-usingDB#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "express": "^4.17.3",
     "mongoose": "^6.2.6",
     "nodemon": "^2.0.15"
