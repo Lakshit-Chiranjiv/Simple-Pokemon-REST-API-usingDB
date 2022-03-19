@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { getAllPokemons } from "../controllers/getAllPokemons.js";
 import { getAPokemon } from "../controllers/getAPokemon.js";
+import { getTypePokemons } from "../controllers/getTypePokemons.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,19 +29,7 @@ router.get('/getAll',getAllPokemons);
 
 router.get('/getOne/:id',getAPokemon);
 
-router.get('/getByType/:type',async(req,res)=>{
-    const { type } = req.params;
-    try {
-        const allPokemon = await pokemonModel.find();
-        if(!allPokemon) throw Error('could not find pokemon');
-        const typePokemons = allPokemon.filter((pokemon) => {
-            return pokemon.type.toLowerCase() === type.toLowerCase();
-        })
-        res.status(200).json(typePokemons);
-    } catch (error) {
-        res.status(400).json({message: error});
-    }
-});
+router.get('/getByType/:type',getTypePokemons);
 
 router.get('/getRandom',async(req,res)=>{
     try {
