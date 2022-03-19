@@ -7,7 +7,7 @@ mongoose.connect(MONGO_DB_URI)
 .then(()=>{console.log("Connected to database")})
 .catch((err) => {console.log(err)});
 
-
+const db = mongoose.connection;
 
 app.get('/',(req,res)=>{
     res.send("hwllovv");
