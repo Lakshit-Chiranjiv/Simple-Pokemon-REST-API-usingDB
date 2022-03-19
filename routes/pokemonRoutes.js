@@ -57,6 +57,17 @@ router.get('/getByType/:type',async(req,res)=>{
     }
 });
 
+router.get('/getRandom',async(req,res)=>{
+    try {
+        const allPokemon = await pokemonModel.find();
+        if(!allPokemon) throw Error('could not find pokemon');
+        const randomPokemon = allPokemon[Math.floor(Math.random() * allPokemon.length)];
+        res.status(200).json(randomPokemon);
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+});
+
 router.post('/add',async(req,res)=>{
     req.body.name = capitalizeWholeString(req.body.name);
     req.body.type = capitalizeWholeString(req.body.type);
