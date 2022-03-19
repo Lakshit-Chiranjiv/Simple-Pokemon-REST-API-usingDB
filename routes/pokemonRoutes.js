@@ -3,6 +3,7 @@ import pokemonModel from "../models/pokemonModel.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { getAllPokemons } from "../controllers/getAllPokemons.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,15 +23,7 @@ router.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'./../view/apiMain.html'));
 });
 
-router.get('/getAll',async(req,res)=>{
-    try {
-        const allPokemons = await pokemonModel.find();
-        if(!allPokemons) throw Error('cannot get due to some server error');
-        res.status(200).json(allPokemons);
-    } catch (error) {
-        res.status(400).json({message: error});
-    }
-});
+router.get('/getAll',getAllPokemons);
 
 router.get('/getOne/:id',async(req,res)=>{
     const { id } = req.params;
