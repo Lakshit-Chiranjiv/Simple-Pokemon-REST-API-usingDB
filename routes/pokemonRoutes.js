@@ -7,19 +7,12 @@ import { getAllPokemons } from "../controllers/getAllPokemons.js";
 import { getAPokemon } from "../controllers/getAPokemon.js";
 import { getTypePokemons } from "../controllers/getTypePokemons.js";
 import { getRandomPokemon } from "../controllers/getRandomPokemon.js";
+import { addPokemon } from "../controllers/addPokemon.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const router = express.Router();
-
-const capitalizeString = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-const capitalizeWholeString = (str) =>{
-    let arr = str.split(' ');
-    let retArr = arr.map((el) => capitalizeString(el));
-    let retStr = retArr.join(" ");
-    return retStr;
-}
 
 router.get('/',(req,res)=>{
     // res.send('<h1>Pokemons API</h1>');
@@ -34,18 +27,7 @@ router.get('/getByType/:type',getTypePokemons);
 
 router.get('/getRandom',getRandomPokemon);
 
-router.post('/add',async(req,res)=>{
-    req.body.name = capitalizeWholeString(req.body.name);
-    req.body.type = capitalizeWholeString(req.body.type);
-    const newPokemon = new pokemonModel(req.body);
-    try {
-        const addedPokemon = await newPokemon.save();
-        if(!addedPokemon) throw Error('could not add');
-        res.status(200).json(addedPokemon);
-    } catch (error) {
-        res.status(400).json({message: error});
-    }
-});
+router.post('/add',addPokemon);
 
 
 router.delete('/delete/:id',async(req,res)=>{
