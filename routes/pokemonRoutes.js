@@ -32,6 +32,8 @@ router.get('/getAll',async(req,res)=>{
     }
 });
 
+
+
 router.post('/add',async(req,res)=>{
     req.body.name = capitalizeWholeString(req.body.name);
     req.body.type = capitalizeWholeString(req.body.type);
@@ -50,8 +52,21 @@ router.delete('/delete/:id',async(req,res)=>{
     const { id } = req.params;
     try {
         const deletedPokemon = await pokemonModel.findByIdAndDelete(id);
-        if(!deletedPokemon) throw Error('could not find pokemon');
+        if(!deletedPokemon) throw Error('could not delete pokemon');
         res.status(200).json({message: `successfully deleted id: ${id}`});
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+});
+
+router.patch('/update/:id',async(req,res)=>{
+    const { id } = req.params;
+    if(req.body.name) req.body.name = capitalizeWholeString(req.body.name);
+    if(req.body.type) req.body.type = capitalizeWholeString(req.body.type);
+    try {
+        const updatedPokemon = await pokemonModel.findByIdAndUpdate(id,req.body);
+        if(!updatedPokemon) throw Error('could not update pokemon');
+        res.status(200).json({message: `successfully updated id: ${id}`});
     } catch (error) {
         res.status(400).json({message: error});
     }
