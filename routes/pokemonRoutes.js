@@ -30,13 +30,8 @@ router.get('/getRandom',getRandomPokemon);
 
 router.post('/add',addPokemon);
 
-
 router.delete('/delete/:id',deletePokemon);
 
 router.patch('/update/:id',updatePokemonData);
-
-
-
-
 
 export default router;
