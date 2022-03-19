@@ -38,6 +38,18 @@ router.post('/add',async(req,res)=>{
 });
 
 
+router.delete('/delete/:id',async(req,res)=>{
+    const { id } = req.params;
+    try {
+        const deletedPokemon = await pokemonModel.findByIdAndDelete(id);
+        if(!deletedPokemon) throw Error('could not find pokemon');
+        res.status(200).json({message: `successfully deleted id: ${id}`});
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+});
+
+
 
 
 
