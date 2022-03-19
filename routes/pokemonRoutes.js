@@ -43,6 +43,20 @@ router.get('/getOne/:id',async(req,res)=>{
     }
 });
 
+router.get('/getByType/:type',async(req,res)=>{
+    const { type } = req.params;
+    try {
+        const allPokemon = await pokemonModel.find();
+        if(!allPokemon) throw Error('could not find pokemon');
+        const typePokemons = allPokemon.filter((pokemon) => {
+            return pokemon.type.toLowerCase() === type.toLowerCase();
+        })
+        res.status(200).json(typePokemons);
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+});
+
 router.post('/add',async(req,res)=>{
     req.body.name = capitalizeWholeString(req.body.name);
     req.body.type = capitalizeWholeString(req.body.type);
