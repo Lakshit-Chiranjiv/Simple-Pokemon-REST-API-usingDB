@@ -8,6 +8,7 @@ import { getAPokemon } from "../controllers/getAPokemon.js";
 import { getTypePokemons } from "../controllers/getTypePokemons.js";
 import { getRandomPokemon } from "../controllers/getRandomPokemon.js";
 import { addPokemon } from "../controllers/addPokemon.js";
+import { deletePokemon } from "../controllers/deletePokemon.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,16 +31,7 @@ router.get('/getRandom',getRandomPokemon);
 router.post('/add',addPokemon);
 
 
-router.delete('/delete/:id',async(req,res)=>{
-    const { id } = req.params;
-    try {
-        const deletedPokemon = await pokemonModel.findByIdAndDelete(id);
-        if(!deletedPokemon) throw Error('could not delete pokemon');
-        res.status(200).json({message: `successfully deleted id: ${id}`});
-    } catch (error) {
-        res.status(400).json({message: error});
-    }
-});
+router.delete('/delete/:id',deletePokemon);
 
 router.patch('/update/:id',async(req,res)=>{
     const { id } = req.params;
