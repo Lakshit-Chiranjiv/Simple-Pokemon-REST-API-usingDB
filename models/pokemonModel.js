@@ -16,6 +16,6 @@ const pokemonSchema = mongoose.Schema({
     }
 });
 
-const pokemonModel = mongoose.model('Pokemons',pokemonSchema);
+const pokemonModel = mongoose.model('pokemonsdata',pokemonSchema);
 
 export default pokemonModel;
