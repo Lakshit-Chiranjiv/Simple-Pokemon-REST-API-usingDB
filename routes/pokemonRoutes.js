@@ -1,5 +1,12 @@
 import express from "express";
 import pokemonModel from "../models/pokemonModel.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const router = express.Router();
 
 const capitalizeString = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -11,7 +18,8 @@ const capitalizeWholeString = (str) =>{
 }
 
 router.get('/',(req,res)=>{
-    res.send('<h1>Pokemons API</h1>');
+    // res.send('<h1>Pokemons API</h1>');
+    res.sendFile(path.join(__dirname,'./../view/apiMain.html'));
 });
 
 router.get('/getAll',async(req,res)=>{
